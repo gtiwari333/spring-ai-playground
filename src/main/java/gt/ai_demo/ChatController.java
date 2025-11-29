@@ -95,13 +95,13 @@ record MathResponse(Operation operation, BigDecimal a, BigDecimal b, BigDecimal 
 class MathTools {
 
     @Tool(description = "Performs math operation between two parameters a and b")
-    public MathResponse performOperation(@RequestParam Operation operation, @RequestParam BigDecimal a, @RequestParam BigDecimal b) {
+    public BigDecimal performOperation(@RequestParam Operation operation, @RequestParam BigDecimal a, @RequestParam BigDecimal b) {
         log.info("Doing math locally {} between {} and {}", operation, a, b);
-        return new MathResponse(operation, a, b, switch (operation) {
+        return switch (operation) {
             case ADD -> a.add(b);
             case SUB -> a.subtract(b);
             case MUL -> a.multiply(b);
             case DIV -> a.divide(b, 6, RoundingMode.HALF_UP);
-        });
+        };
     }
 }
